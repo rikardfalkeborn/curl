@@ -57,27 +57,25 @@ CLEANFILES = lib1521.c
 LIBS = $(BLANK_AT_MAKETIME)
 
 if USE_EXPLICIT_LIB_DEPS
-SUPPORTFILES_LIBS = $(top_builddir)/lib/libcurl.la @LIBCURL_LIBS@
+SUPPORTFILES_LIBS_LIBS = $(top_builddir)/lib/libcurl.la @LIBCURL_LIBS@
 TESTUTIL_LIBS = $(top_builddir)/lib/libcurl.la @LIBCURL_LIBS@
 else
-SUPPORTFILES_LIBS = $(top_builddir)/lib/libcurl.la @CURL_NETWORK_LIBS@ @NSS_LIBS@
+SUPPORTFILES_LIBS_LIBS = $(top_builddir)/lib/libcurl.la @CURL_NETWORK_LIBS@ @NSS_LIBS@
 TESTUTIL_LIBS = $(top_builddir)/lib/libcurl.la @CURL_NETWORK_AND_TIME_LIBS@ @NSS_LIBS@
 endif
 
 # Dependencies (may need to be overridden)
-LDADD = $(SUPPORTFILES_LIBS)
+LDADD = libsupportfiles.la
 
 # Makefile.inc provides the source defines (TESTUTIL, SUPPORTFILES,
-# noinst_PROGRAMS, lib*_SOURCES, and lib*_CFLAGS)
+# noinst_LTLIBRARIES, noinst_PROGRAMS, lib*_SOURCES, and lib*_CFLAGS)
 include Makefile.inc
 
 # Preloading of libhostname allows host name overriding,
 # this is used to make some tests machine independent.
 
 if BUILD_LIBHOSTNAME
-noinst_LTLIBRARIES = libhostname.la
-else
-noinst_LTLIBRARIES =
+noinst_LTLIBRARIES += libhostname.la
 endif
 
 if USE_CPPFLAG_CURL_STATICLIB
