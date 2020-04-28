@@ -21,7 +21,8 @@
 ###########################################################################
 
 # Build libs to avoid having to build the same files multiple times
-noinst_LTLIBRARIES = libsupportfiles.la libtestutil.la libwarnless.la
+noinst_LTLIBRARIES = libsupportfiles.la libtesttrace.la \
+                     libtestutil.la libwarnless.la
 
 libsupportfiles_la_CPPFLAGS = $(AM_CPPFLAGS)
 libsupportfiles_la_LDFLAGS = $(AM_LDFLAGS)
@@ -38,6 +39,14 @@ libtestutil_la_SOURCES = testutil.c testutil.h
 libtestutil_la_DEPENDENCIES =
 TESTUTIL_LIBS = libtestutil.la
 
+libtesttrace_la_CPPFLAGS = $(AM_CPPFLAGS)
+libtesttrace_la_LDFLAGS = $(AM_LDFLAGS)
+libtesttrace_la_CFLAGS = $(AM_CFLAGS) -g
+libtesttrace_la_SOURCES = testtrace.c testtrace.h
+libtesttrace_la_LIBADD = libtestutil.la
+libtesttrace_la_DEPENDENCIES =
+TESTTRACE_LIBS = libtesttrace.la
+
 libwarnless_la_CPPFLAGS = $(AM_CPPFLAGS)
 libwarnless_la_LDFLAGS = $(AM_LDFLAGS)
 libwarnless_la_CFLAGS = $(AM_CFLAGS) -g
@@ -45,9 +54,6 @@ libwarnless_la_SOURCES = ../../lib/warnless.c ../../lib/warnless.h
 libwarnless_la_LIBADD =
 libwarnless_la_DEPENDENCIES =
 WARNLESS_LIBS = libwarnless.la
-
-# files used only in some libcurl test programs
-TSTTRACE = testtrace.c testtrace.h
 
 # files used only in some libcurl test programs
 MULTIBYTE = ../../lib/curl_multibyte.c ../../lib/curl_multibyte.h
@@ -98,8 +104,8 @@ libntlmconnect_CPPFLAGS = $(AM_CPPFLAGS)
 libauthretry_SOURCES = libauthretry.c
 libauthretry_CPPFLAGS = $(AM_CPPFLAGS)
 
-lib500_SOURCES = lib500.c $(TSTTRACE) $(MULTIBYTE)
-lib500_LDADD = $(SUPPORTFILES_LIBS) $(TESTUTIL_LIBS)
+lib500_SOURCES = lib500.c $(MULTIBYTE)
+lib500_LDADD = $(SUPPORTFILES_LIBS) $(TESTUTIL_LIBS) $(TESTTRACE_LIBS)
 lib500_CPPFLAGS = $(AM_CPPFLAGS)
 
 lib501_SOURCES = lib501.c
@@ -339,8 +345,9 @@ lib572_SOURCES = lib572.c $(MULTIBYTE)
 lib572_LDADD = $(SUPPORTFILES_LIBS)
 lib572_CPPFLAGS = $(AM_CPPFLAGS)
 
-lib573_SOURCES = lib573.c $(TSTTRACE)
-lib573_LDADD = $(SUPPORTFILES_LIBS) $(TESTUTIL_LIBS) $(WARNLESS_LIBS)
+lib573_SOURCES = lib573.c
+lib573_LDADD = $(SUPPORTFILES_LIBS) $(TESTTRACE_LIBS) \
+               $(TESTUTIL_LIBS) $(WARNLESS_LIBS)
 lib573_CPPFLAGS = $(AM_CPPFLAGS)
 
 lib574_SOURCES = lib574.c
@@ -371,8 +378,8 @@ lib583_SOURCES = lib583.c
 lib583_LDADD = $(SUPPORTFILES_LIBS)
 lib583_CPPFLAGS = $(AM_CPPFLAGS)
 
-lib585_SOURCES = lib500.c $(TSTTRACE) $(MULTIBYTE)
-lib585_LDADD = $(SUPPORTFILES_LIBS) $(TESTUTIL_LIBS)
+lib585_SOURCES = lib500.c $(MULTIBYTE)
+lib585_LDADD = $(SUPPORTFILES_LIBS) $(TESTTRACE_LIBS) $(TESTUTIL_LIBS)
 lib585_CPPFLAGS = $(AM_CPPFLAGS) -DLIB585
 
 lib586_SOURCES = lib586.c
