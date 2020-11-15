@@ -22,6 +22,8 @@
  *
  ***************************************************************************/
 
+#include "curl_setup.h"
+
 #ifndef BUILDING_LIBCURL
 /* this renames the functions so that the tool code can use the same code
    without getting symbol collisions */
@@ -56,9 +58,9 @@ CURLcode Curl_dyn_addn(struct dynbuf *s, const void *mem, size_t len)
 CURLcode Curl_dyn_add(struct dynbuf *s, const char *str)
   WARN_UNUSED_RESULT;
 CURLcode Curl_dyn_addf(struct dynbuf *s, const char *fmt, ...)
-  WARN_UNUSED_RESULT;
+  WARN_UNUSED_RESULT CURL_FORMAT_PRINTF(2, 3);
 CURLcode Curl_dyn_vaddf(struct dynbuf *s, const char *fmt, va_list ap)
-  WARN_UNUSED_RESULT;
+  WARN_UNUSED_RESULT CURL_FORMAT_PRINTF(2, 0);
 void Curl_dyn_reset(struct dynbuf *s);
 CURLcode Curl_dyn_tail(struct dynbuf *s, size_t trail);
 char *Curl_dyn_ptr(const struct dynbuf *s);
@@ -67,7 +69,8 @@ size_t Curl_dyn_len(const struct dynbuf *s);
 
 /* returns 0 on success, -1 on error */
 /* The implementation of this function exists in mprintf.c */
-int Curl_dyn_vprintf(struct dynbuf *dyn, const char *format, va_list ap_save);
+int Curl_dyn_vprintf(struct dynbuf *dyn, const char *format, va_list ap_save)
+  CURL_FORMAT_PRINTF(2, 0);
 
 /* Dynamic buffer max sizes */
 #define DYN_DOH_RESPONSE    3000
