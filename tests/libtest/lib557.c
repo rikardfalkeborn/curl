@@ -1539,8 +1539,15 @@ static int test_weird_arguments(void)
 
   /* Do not skip sanity checks with parameters! */
   buf[0] = 0;
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-invalid-specifier"
+#pragma clang diagnostic ignored "-Wformat-extra-args"
+#endif
   rc = curl_msnprintf(buf, sizeof(buf), "%d, %.*1$d", 500, 1);
-
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif
   if(rc != 256) {
     printf("curl_mprintf() returned %d and not 256!\n", rc);
     errors++;
@@ -1589,7 +1596,14 @@ static int test_float_formatting(void)
   curl_msnprintf(buf, sizeof(buf), "%-10.3f", 9.123456);
   errors += string_check(buf, "9.123     ");
 
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-invalid-specifier"
+#endif
   curl_msnprintf(buf, sizeof(buf), "%.-2f", 9.1);
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif
   errors += string_check(buf, "9.100000");
 
   curl_msnprintf(buf, sizeof(buf), "%*f", 10, 9.1);
