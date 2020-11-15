@@ -128,7 +128,10 @@ static char *unescape_word(struct Curl_easy *data, const char *inputbuff)
   return dictp;
 }
 
-/* sendf() sends formatted data to the server */
+/* sendf() sends formatted data to the server. Add declaration to be able
+ * to add CURL_FORMAT_PRINTF. */
+static CURLcode sendf(curl_socket_t sockfd, struct connectdata *conn,
+                      const char *fmt, ...) CURL_FORMAT_PRINTF(3, 4);
 static CURLcode sendf(curl_socket_t sockfd, struct connectdata *conn,
                       const char *fmt, ...)
 {
