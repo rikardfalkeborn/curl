@@ -325,7 +325,7 @@ void ourWriteOut(CURL *curl, struct per_transfer *per, const char *writeinfo)
                     break;
                   }
 
-                  fprintf(stream, version);
+                  fputs(version, stream);
                 }
                 break;
               case VAR_SCHEME:
