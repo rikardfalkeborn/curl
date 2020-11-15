@@ -1020,8 +1020,8 @@ static int on_header(nghttp2_session *session, const nghttp2_frame *frame,
     H2BUGF(infof(data_s, "h2 trailer: %.*s: %.*s\n", namelen, name, valuelen,
                  value));
     result = Curl_dyn_addf(&stream->trailer_recvbuf,
-                           "%.*s: %.*s\r\n", namelen, name,
-                           valuelen, value);
+                           "%.*s: %.*s\r\n", (int)namelen, name,
+                           (int)valuelen, value);
     if(result)
       return NGHTTP2_ERR_CALLBACK_FAILURE;
 
