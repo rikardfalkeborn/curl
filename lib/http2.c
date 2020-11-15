@@ -1138,7 +1138,7 @@ static int error_callback(nghttp2_session *session,
 {
   struct connectdata *conn = (struct connectdata *)userp;
   (void)session;
-  infof(conn->data, "http2 error: %.*s\n", len, msg);
+  infof(conn->data, "http2 error: %.*s\n", (int)len, msg);
   return 0;
 }
 #endif

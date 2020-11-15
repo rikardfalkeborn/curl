@@ -756,8 +756,8 @@ static CURLcode http_request(struct connectdata *conn, const void *mem,
       acc += nva[i].name_len + nva[i].value_len;
 
       H3BUGF(infof(data, "h3 [%.*s: %.*s]\n",
-                   nva[i].name_len, nva[i].name,
-                   nva[i].value_len, nva[i].value));
+                   (int)nva[i].name_len, nva[i].name,
+                   (int)nva[i].value_len, nva[i].value));
     }
 
     if(acc > MAX_ACC) {
