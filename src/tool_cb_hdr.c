@@ -203,7 +203,7 @@ size_t tool_header_cb(char *ptr, size_t size, size_t nmemb, void *userdata)
       value = memchr(ptr, ':', cb);
     if(value) {
       size_t namelen = value - ptr;
-      fprintf(outs->stream, BOLD "%.*s" BOLDOFF ":", namelen, ptr);
+      fprintf(outs->stream, BOLD "%.*s" BOLDOFF ":", (int)namelen, ptr);
       fwrite(&value[1], cb - namelen - 1, 1, outs->stream);
     }
     else

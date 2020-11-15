@@ -472,7 +472,7 @@ CURLcode glob_url(struct URLGlob **glob, char *url, unsigned long *urlnum,
       if(glob_expand->pos) {
         msnprintf(text, sizeof(text), "%s in URL position %zu:\n%s\n%*s^",
                   glob_expand->error,
-                  glob_expand->pos, url, glob_expand->pos - 1, " ");
+                  glob_expand->pos, url, (int)glob_expand->pos - 1, " ");
         t = text;
       }
       else

@@ -99,7 +99,7 @@ int Curl_socketpair(int domain, int type, int protocol,
     goto error;
 
   /* verify that nothing else connected */
-  msnprintf(data[0], sizeof(data[0]), "%p", socks);
+  msnprintf(data[0], sizeof(data[0]), "%p", (void *)socks);
   dlen = strlen(data[0]);
   if(swrite(socks[0], data[0], dlen) != dlen)
     goto error;
