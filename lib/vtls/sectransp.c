@@ -1970,7 +1970,7 @@ static CURLcode sectransp_connect_step1(struct connectdata *conn,
     else {
       CURLcode result;
       ssl_sessionid =
-        aprintf("%s:%d:%d:%s:%hu", ssl_cafile,
+        aprintf("%s:%d:%d:%s:%ld", ssl_cafile,
                 verifypeer, SSL_CONN_CONFIG(verifyhost), hostname, port);
       ssl_sessionid_len = strlen(ssl_sessionid);
 
