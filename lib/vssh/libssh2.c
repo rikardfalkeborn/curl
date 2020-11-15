@@ -1265,7 +1265,7 @@ static CURLcode ssh_statemach_act(struct connectdata *conn, bool *block)
              a time-out or similar */
           result = CURLE_SSH;
         sshc->actualcode = result;
-        DEBUGF(infof(data, "error = %d makes libcurl = %d\n",
+        DEBUGF(infof(data, "error = %lu makes libcurl = %d\n",
                      sftperr, (int)result));
         state(conn, SSH_STOP);
         break;
@@ -1945,7 +1945,7 @@ static CURLcode ssh_statemach_act(struct connectdata *conn, bool *block)
           sshc->actualcode = CURLE_SSH;
           sftperr = LIBSSH2_FX_OK;
         }
-        failf(data, "Upload failed: %s (%d/%d)",
+        failf(data, "Upload failed: %s (%lu/%d)",
               sftperr != LIBSSH2_FX_OK ?
               sftp_libssh2_strerror(sftperr):"ssh error",
               sftperr, rc);
@@ -2363,7 +2363,7 @@ static CURLcode ssh_statemach_act(struct connectdata *conn, bool *block)
           if(from > size) {
             failf(data, "Offset (%"
                   CURL_FORMAT_CURL_OFF_T ") was beyond file size (%"
-                  CURL_FORMAT_CURL_OFF_T ")", from, attrs.filesize);
+                  CURL_FORMAT_CURL_OFF_T ")", from, size);
             return CURLE_BAD_DOWNLOAD_RESUME;
           }
           if(from > to) {
@@ -2389,7 +2389,7 @@ static CURLcode ssh_statemach_act(struct connectdata *conn, bool *block)
             failf(data, "Offset (%"
                   CURL_FORMAT_CURL_OFF_T ") was beyond file size (%"
                   CURL_FORMAT_CURL_OFF_T ")",
-                  data->state.resume_from, attrs.filesize);
+                  data->state.resume_from, (curl_off_t)attrs.filesize);
             return CURLE_BAD_DOWNLOAD_RESUME;
           }
           /* download from where? */
@@ -2399,7 +2399,7 @@ static CURLcode ssh_statemach_act(struct connectdata *conn, bool *block)
           if((curl_off_t)attrs.filesize < data->state.resume_from) {
             failf(data, "Offset (%" CURL_FORMAT_CURL_OFF_T
                   ") was beyond file size (%" CURL_FORMAT_CURL_OFF_T ")",
-                  data->state.resume_from, attrs.filesize);
+                  data->state.resume_from, (curl_off_t)attrs.filesize);
             return CURLE_BAD_DOWNLOAD_RESUME;
           }
         }

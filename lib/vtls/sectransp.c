@@ -2189,7 +2189,7 @@ static CURLcode verify_cert(const char *cafile, struct Curl_easy *data,
     if(res < 0) {
       free(certbuf);
       CFRelease(array);
-      failf(data, "SSL: invalid CA certificate #%d (offset %d) in bundle",
+      failf(data, "SSL: invalid CA certificate #%d (offset %zu) in bundle",
             n, offset);
       return CURLE_SSL_CACERT_BADFILE;
     }
