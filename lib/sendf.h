@@ -24,8 +24,10 @@
 
 #include "curl_setup.h"
 
-void Curl_infof(struct Curl_easy *, const char *fmt, ...);
-void Curl_failf(struct Curl_easy *, const char *fmt, ...);
+void Curl_infof(struct Curl_easy *, const char *fmt, ...)
+    CURL_FORMAT_PRINTF(2, 3);
+void Curl_failf(struct Curl_easy *, const char *fmt, ...)
+    CURL_FORMAT_PRINTF(2, 3);
 
 #if defined(CURL_DISABLE_VERBOSE_STRINGS)
 
