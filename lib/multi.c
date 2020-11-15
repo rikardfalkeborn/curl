@@ -3435,7 +3435,7 @@ void Curl_expire_clear(struct Curl_easy *data)
     }
 
 #ifdef DEBUGBUILD
-    infof(data, "Expire cleared (transfer %p)\n", data);
+    infof(data, "Expire cleared (transfer %p)\n", (void *)data);
 #endif
     nowp->tv_sec = 0;
     nowp->tv_usec = 0;

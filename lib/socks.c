@@ -148,7 +148,7 @@ static void socksstate(struct connectdata *conn,
 #if defined(DEBUGBUILD) && !defined(CURL_DISABLE_VERBOSE_STRINGS)
   infof(conn->data,
         "SXSTATE: %s => %s conn %p; line %d\n",
-        statename[oldstate], statename[conn->cnnct.state], conn,
+        statename[oldstate], statename[conn->cnnct.state], (void *)conn,
         lineno);
 #endif
 }
