@@ -673,6 +673,19 @@ int netware_init(void);
 #endif
 
 /*
+ * Provide a mechanism to make clang understand functions which takes format
+ * specifiers as input, to be able to diagnose mismatching specifiers and
+ * arguments. The functionality exists for gcc as well, but can not be enabled
+ * since this will cause warnings with %zu.
+ */
+#if defined(__clang__)
+# define CURL_FORMAT_PRINTF(iformat, ispecifiers) __attribute__ \
+    ((format (__printf__, (iformat), (ispecifiers))))
+#else
+# define CURL_FORMAT_PRINTF(iformat, ispecifiers) /* DO NOTHING */
+#endif
+
+/*
  * Include macros and defines that should only be processed once.
  */
 
