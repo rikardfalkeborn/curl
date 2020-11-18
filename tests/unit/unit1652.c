@@ -90,10 +90,19 @@ fail_unless(strcmp(result, "Simple Test 42 testing 43\n") == 0,
             "Format string");
 
 /* Variations of empty strings */
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat"
+#pragma GCC diagnostic ignored "-Wformat-overflow"
+#pragma GCC diagnostic ignored "-Wformat-zero-length"
+#endif
 Curl_infof(data, "");
 fail_unless(strlen(result) == 0, "Empty string");
 Curl_infof(data, "%s", (char *)NULL);
 fail_unless(strcmp(result, "(nil)") == 0, "Passing NULL as string");
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
 
 /* A string just long enough to not be truncated */
 memset(input, '\0', sizeof(input));

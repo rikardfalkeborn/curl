@@ -1543,10 +1543,15 @@ static int test_weird_arguments(void)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wformat-invalid-specifier"
 #pragma clang diagnostic ignored "-Wformat-extra-args"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat"
 #endif
   rc = curl_msnprintf(buf, sizeof(buf), "%d, %.*1$d", 500, 1);
 #if defined(__clang__)
 #pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
 #endif
   if(rc != 256) {
     printf("curl_mprintf() returned %d and not 256!\n", rc);
@@ -1599,10 +1604,17 @@ static int test_float_formatting(void)
 #if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wformat-invalid-specifier"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat"
+#pragma GCC diagnostic ignored "-Wformat-extra-args"
+#pragma GCC diagnostic ignored "-Wformat-overflow"
 #endif
   curl_msnprintf(buf, sizeof(buf), "%.-2f", 9.1);
 #if defined(__clang__)
 #pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
 #endif
   errors += string_check(buf, "9.100000");
 
@@ -1650,7 +1662,14 @@ static int test_float_formatting(void)
   errors += strlen_check(buf, 325);
 
   /* check negative when used signed */
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-overflow"
+#endif
   curl_msnprintf(buf, sizeof(buf), "%*f", INT_MIN, 9.1);
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
   errors += string_check(buf, "9.100000");
 
   /* curl_msnprintf() limits a single float output to 325 bytes maximum

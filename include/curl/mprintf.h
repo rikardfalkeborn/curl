@@ -30,7 +30,7 @@
 extern "C" {
 #endif
 
-#if defined(__clang__)
+#if defined(__GNUC__)
 # define CURL_FORMAT_PRINTF(iformat, ispecifiers) __attribute__ \
     ((format (__printf__, (iformat), (ispecifiers))))
 #else

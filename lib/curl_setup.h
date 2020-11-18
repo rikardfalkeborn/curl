@@ -678,7 +678,7 @@ int netware_init(void);
  * arguments. The functionality exists for gcc as well, but can not be enabled
  * since this will cause warnings with %zu.
  */
-#if defined(__clang__)
+#if defined(__GNUC__)
 # define CURL_FORMAT_PRINTF(iformat, ispecifiers) __attribute__ \
     ((format (__printf__, (iformat), (ispecifiers))))
 #else
