@@ -1135,12 +1135,17 @@ static CURLcode myssh_statemach_act(struct connectdata *conn, bool *block)
                             "f_ffree: %llu\n" "f_favail: %llu\n"
                             "f_fsid: %llu\n" "f_flag: %llu\n"
                             "f_namemax: %llu\n",
-                            statvfs->f_bsize, statvfs->f_frsize,
-                            statvfs->f_blocks, statvfs->f_bfree,
-                            statvfs->f_bavail, statvfs->f_files,
-                            statvfs->f_ffree, statvfs->f_favail,
-                            statvfs->f_fsid, statvfs->f_flag,
-                            statvfs->f_namemax);
+                            (unsigned long long)statvfs->f_bsize,
+                            (unsigned long long)statvfs->f_frsize,
+                            (unsigned long long)statvfs->f_blocks,
+                            (unsigned long long)statvfs->f_bfree,
+                            (unsigned long long)statvfs->f_bavail,
+                            (unsigned long long)statvfs->f_files,
+                            (unsigned long long)statvfs->f_ffree,
+                            (unsigned long long)statvfs->f_favail,
+                            (unsigned long long)statvfs->f_fsid,
+                            (unsigned long long)statvfs->f_flag,
+                            (unsigned long long)statvfs->f_namemax);
         sftp_statvfs_free(statvfs);
 
         if(!tmp) {
